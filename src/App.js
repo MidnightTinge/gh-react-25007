@@ -1,23 +1,27 @@
-import logo from './logo.svg';
 import './App.css';
+import Item from './Item';
+import {useCallback, useState} from 'react';
 
 function App() {
+  const [duplicate, setDuplicate] = useState(true)
+
+  const items = [
+    ['key1', 'val1'],
+    ['key1', 'val2'],
+  ];
+
+  const toggleDuplicate = useCallback(() => {
+    setDuplicate(v => !v)
+  }, [setDuplicate])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      {items.map(([key, value]) => (
+        <Item key={duplicate ? key : value} value={value} />
+      ))}
+      <button onClick={toggleDuplicate}>
+        Toggle duplicate keys
+      </button>
     </div>
   );
 }
